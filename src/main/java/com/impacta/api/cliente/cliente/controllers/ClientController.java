@@ -1,14 +1,21 @@
 package com.impacta.api.cliente.cliente.controllers;
 
 
+import com.impacta.api.cliente.cliente.dtos.ClientDto;
+import com.impacta.api.cliente.cliente.models.ClientModel;
 import com.impacta.api.cliente.cliente.service.ClientService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
 
 @RestController
 @CrossOrigin(origins = "*", maxAge =3600)
-@RequestMapping("/Client")
+@RequestMapping("/client")
+
 public class ClientController {
 
     final ClientService clientService;
@@ -17,5 +24,16 @@ public class ClientController {
         this.clientService = clientService;
     }
 
+    @PostMapping
+    public ResponseEntity<Object> saveClient(@RequestBody @Valid ClientDto clientDto){
+
+        var clientModel = new ClientModel();
+        BeanUtils.copyProperties(clientDto, clientModel);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.save(clientModel));
+    }
+
 
 }
+
+

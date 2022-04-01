@@ -2,7 +2,7 @@ package com.impacta.api.cliente.cliente.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+
 import java.util.UUID;
 
 
@@ -19,8 +19,7 @@ public class ClientModel implements Serializable {
     private String nameClient;
 
     @Column(nullable = false)
-    private LocalDateTime birthDate;
-
+    private String dateB;
 
     public UUID getId() {
         return id;
@@ -38,11 +37,11 @@ public class ClientModel implements Serializable {
         this.nameClient = nameClient;
     }
 
-    public LocalDateTime getRegistrationDate() {
-        return birthDate;
+    public String getDateB() {
+        return dateB;
     }
 
-    public void setRegistrationDate(LocalDateTime registrationDate) {
-        this.birthDate = registrationDate;
+    public void setDateB(String dateB) {
+        this.dateB = dateB;
     }
 }

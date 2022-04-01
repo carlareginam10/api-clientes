@@ -7,7 +7,7 @@ public class ClientDto {
     @NotBlank
     private String nameClient;
     @NotBlank
-    private LocalDateTime birthDate;
+    private String DateB;
 
     public String getNameClient() {
         return nameClient;
@@ -17,11 +17,11 @@ public class ClientDto {
         this.nameClient = nameClient;
     }
 
-    public LocalDateTime getBirthDate() {
-        return birthDate;
+    public String getDateB() {
+        return DateB;
     }
 
-    public void setBirthDate(LocalDateTime birthDate) {
-        this.birthDate = birthDate;
+    public void setDateB(String dateB) {
+        DateB = dateB;
     }
 }
