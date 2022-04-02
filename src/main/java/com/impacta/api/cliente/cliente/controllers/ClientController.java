@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 
 @RestController
@@ -42,6 +44,18 @@ public class ClientController {
     public ResponseEntity<List<ClientModel>> getAllClients() {
         return ResponseEntity.status(HttpStatus.OK).body(clientService.findAll());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOneClient(@PathVariable(value = "id") UUID id){
+        Optional<ClientModel> clientModelOptional = clientService.findById(id);
+
+        if (!clientModelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(clientModelOptional.get());
+    }
+
+
 
 
 
