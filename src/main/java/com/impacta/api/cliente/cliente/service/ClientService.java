@@ -36,4 +36,8 @@ public class ClientService {
         return clientRepository.findById(id);
 
     }
+    @Transactional
+    public void delete(ClientModel clientModel) {
+        clientRepository.delete(clientModel);
+    }
 }
