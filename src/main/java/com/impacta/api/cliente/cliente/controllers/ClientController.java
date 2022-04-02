@@ -65,6 +65,21 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.OK).body("client deleted successfully.");
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateClient(@PathVariable(value = "id") UUID id,
+                                                    @RequestBody @Valid ClientDto clientDto){
+        Optional<ClientModel> parkingSpotModelOptional = clientService.findById(id);
+        if (!parkingSpotModelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found.");
+        }
+        var clientModel = new ClientModel();
+        BeanUtils.copyProperties(clientDto, clientModel);
+        clientModel.setId(parkingSpotModelOptional.get().getId());
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.save(clientModel));
+    }
+
+
+
 
 
 
