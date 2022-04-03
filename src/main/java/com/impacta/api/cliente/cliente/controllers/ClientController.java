@@ -4,6 +4,8 @@ package com.impacta.api.cliente.cliente.controllers;
 import com.impacta.api.cliente.cliente.dtos.ClientDto;
 import com.impacta.api.cliente.cliente.models.ClientModel;
 import com.impacta.api.cliente.cliente.service.ClientService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,7 @@ import java.util.UUID;
 @RestController
 @CrossOrigin(origins = "*", maxAge =3600)
 @RequestMapping("/client")
+@Api(value="API REST Client")
 
 public class ClientController {
 
@@ -32,6 +35,7 @@ public class ClientController {
     }
 
     @PostMapping
+    @ApiOperation(value="Post clients")
     public ResponseEntity<Object> saveClient(@RequestBody @Valid ClientDto clientDto){
 
         var clientModel = new ClientModel();
@@ -41,11 +45,13 @@ public class ClientController {
     }
 
     @GetMapping
+    @ApiOperation(value="Return clients all")
     public ResponseEntity<List<ClientModel>> getAllClients() {
         return ResponseEntity.status(HttpStatus.OK).body(clientService.findAll());
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value="Return client by id")
     public ResponseEntity<Object> getOneClient(@PathVariable(value = "id") UUID id){
         Optional<ClientModel> clientModelOptional = clientService.findById(id);
 
@@ -55,7 +61,10 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.OK).body(clientModelOptional.get());
     }
 
+
+
     @DeleteMapping("/{id}")
+    @ApiOperation(value="Delete client by id")
     public ResponseEntity<Object> deleteParkingSpot(@PathVariable(value = "id") UUID id){
         Optional<ClientModel> clientModelOptional = clientService.findById(id);
         if (!clientModelOptional.isPresent()) {
@@ -66,6 +75,7 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
+    @ApiOperation(value="Update client by id")
     public ResponseEntity<Object> updateClient(@PathVariable(value = "id") UUID id,
                                                     @RequestBody @Valid ClientDto clientDto){
         Optional<ClientModel> parkingSpotModelOptional = clientService.findById(id);
