@@ -7,10 +7,6 @@ import com.impacta.api.cliente.cliente.service.ClientService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,14 +24,16 @@ import java.util.UUID;
 
 public class ClientController {
 
-    final ClientService clientService;
+    ClientService clientService = null;
+    private List<ClientModel> ClientRepository;
+
 
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
 
     @PostMapping
-    @ApiOperation(value="Post clients")
+    @ApiOperation(value="Insert clients")
     public ResponseEntity<Object> saveClient(@RequestBody @Valid ClientDto clientDto){
 
         var clientModel = new ClientModel();
@@ -50,7 +48,13 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.OK).body(clientService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/name/{name}")
+    @ApiOperation(value="Return client by name")
+    public   List<ClientModel> findByNameContains(@PathVariable("name") String name){
+        return clientService.findByNameContains(name);
+    }
+
+    @GetMapping("/id/{id}")
     @ApiOperation(value="Return client by id")
     public ResponseEntity<Object> getOneClient(@PathVariable(value = "id") UUID id){
         Optional<ClientModel> clientModelOptional = clientService.findById(id);
@@ -60,8 +64,6 @@ public class ClientController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(clientModelOptional.get());
     }
-
-
 
     @DeleteMapping("/{id}")
     @ApiOperation(value="Delete client by id")
@@ -74,7 +76,7 @@ public class ClientController {
         return ResponseEntity.status(HttpStatus.OK).body("client deleted successfully.");
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     @ApiOperation(value="Update client by id")
     public ResponseEntity<Object> updateClient(@PathVariable(value = "id") UUID id,
                                                     @RequestBody @Valid ClientDto clientDto){
@@ -87,6 +89,10 @@ public class ClientController {
         clientModel.setId(parkingSpotModelOptional.get().getId());
         return ResponseEntity.status(HttpStatus.OK).body(clientService.save(clientModel));
     }
+
+
+
+
 
 
 

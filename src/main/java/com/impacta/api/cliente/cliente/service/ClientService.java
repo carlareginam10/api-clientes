@@ -3,7 +3,6 @@ package com.impacta.api.cliente.cliente.service;
 import com.impacta.api.cliente.cliente.models.ClientModel;
 import com.impacta.api.cliente.cliente.repositories.ClientRepository;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -36,8 +35,15 @@ public class ClientService {
         return clientRepository.findById(id);
 
     }
+    public List<ClientModel> findByNameContains(String name) {
+        return clientRepository.findByNameContains(name);
+    }
+
     @Transactional
     public void delete(ClientModel clientModel) {
         clientRepository.delete(clientModel);
     }
+
+
+
 }

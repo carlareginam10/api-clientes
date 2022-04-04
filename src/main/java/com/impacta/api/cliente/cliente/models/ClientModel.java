@@ -1,8 +1,12 @@
 package com.impacta.api.cliente.cliente.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 
@@ -16,10 +20,11 @@ public class ClientModel implements Serializable {
     private UUID id;
 
     @Column(nullable = false, length = 130)
-    private String nameClient;
+    private String name;
 
-    @Column(nullable = false)
-    private String dateB;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate birthD;
 
     public UUID getId() {
         return id;
@@ -29,19 +34,19 @@ public class ClientModel implements Serializable {
         this.id = id;
     }
 
-    public String getNameClient() {
-        return nameClient;
+    public String getName() {
+        return name;
     }
 
-    public void setNameClient(String nameClient) {
-        this.nameClient = nameClient;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDateB() {
-        return dateB;
+    public LocalDate getBirthD() {
+        return birthD;
     }
 
-    public void setDateB(String dateB) {
-        this.dateB = dateB;
+    public void setBirthD(LocalDate birthD) {
+        this.birthD = birthD;
     }
 }
